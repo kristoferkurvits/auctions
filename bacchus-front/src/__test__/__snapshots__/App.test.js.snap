@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App component and its children render renders App correctly 1`] = `
+<div
+  className="ui container"
+>
+  <h2
+    className="ui header"
+    style={
+      Object {
+        "margin": 20,
+        "textAlign": "center",
+      }
+    }
+  >
+    Auctions
+  </h2>
+  
+</div>
+`;

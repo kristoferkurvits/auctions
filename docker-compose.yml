@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  app-server:
+    build:
+      context: bacchus-back
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on: 
+      - db  
+    networks:
+      - backend
+      - frontend
+ 
+
+  app-client:
+    build:
+      context: bacchus-front
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_BASE_URL: http://127.0.0.1:8080/
+    ports:
+      - "9090:80"
+    restart: always
+    depends_on:
+      - app-server
+    networks:
+      - frontend 
+ 
+ 
+
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_DATABASE: auction
+      MYSQL_USER: root
+      MYSQL_PASSWORD: toor
+      MYSQL_ROOT_PASSWORD: toor
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - backend  
+  
+
+volumes:
+  db-data:
+
+
+networks:
+  backend:
+  frontend:
