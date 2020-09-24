@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -38,7 +40,7 @@ public class User {
 
     @NotNull
     @Max(Long.MAX_VALUE)
-    @Min(Long.MIN_VALUE)
+    @Min(1)
     private int bid;
 
     @Column(name = "local_date_time", columnDefinition = "TIMESTAMP")

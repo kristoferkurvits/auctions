@@ -15,28 +15,34 @@ public class Auction {
 
     public static JSONArray fetchAuctions() throws IOException, ParseException {
 
-        URL url = new URL(apiEndpoint);
-        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.connect();
-        int responsecode = conn.getResponseCode();
+        JSONArray jsonArray = new JSONArray();
 
-        JSONArray jsonArray = null;
+        try{
+            URL url = new URL(apiEndpoint);
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            int responsecode = conn.getResponseCode();
 
-        if (responsecode != 200)
-            throw new RuntimeException("HttpResponseCode: " + responsecode);
-        else {
-            Scanner sc = new Scanner(url.openStream());
-            String inline = "";
-            while (sc.hasNext()) {
-                inline += sc.nextLine();
+
+            if (responsecode != 200)
+                throw new RuntimeException("HttpResponseCode: " + responsecode);
+            else {
+                Scanner sc = new Scanner(url.openStream());
+                String inline = "";
+                while (sc.hasNext()) {
+                    inline += sc.nextLine();
+                }
+
+                sc.close();
+
+                JSONParser parser = new JSONParser();
+                jsonArray = (JSONArray) parser.parse(inline);
             }
-
-            sc.close();
-
-            JSONParser parser = new JSONParser();
-            jsonArray = (JSONArray) parser.parse(inline);
+        }catch (Exception e){
+            System.out.println("Error fetching auctions" + e);
         }
+
 
         return jsonArray;
 
